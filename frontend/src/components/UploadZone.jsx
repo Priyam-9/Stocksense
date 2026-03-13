@@ -33,7 +33,7 @@ export default function UploadZone({ onUpload }) {
     }
   }
 
-  // ✅ Drag events
+  // Drag events
   const onDragOver = (e) => {
     e.preventDefault()
     e.stopPropagation()
@@ -54,7 +54,7 @@ export default function UploadZone({ onUpload }) {
     handleFile(file)
   }
 
-  // ✅ Click to browse
+
   const onInputChange = (e) => {
     const file = e.target.files[0]
     handleFile(file)

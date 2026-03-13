@@ -1,85 +1,68 @@
 import { useState } from "react"
 import UploadZone from "./components/UploadZone"
+import ChatBar from "./components/ChatBar"
+import StockChart from "./components/StockChart"
 
 export default function App() {
   const [uploadData, setUploadData] = useState(null)
+  const [result, setResult] = useState(null)
+  const [loading, setLoading] = useState(false)
 
   return (
-    <div style={{ minHeight: "100vh", background: "#0f172a", color: "white", padding: "40px" }}>
-      
+    <div style={{ minHeight: "100vh", background: "#0f172a", color: "white", padding: "40px 20px" }}>
+
       {/* Header */}
       <div style={{ textAlign: "center", marginBottom: "40px" }}>
         <h1 style={{ fontSize: "2.5rem", color: "#10b981" }}>📈 StockSense AI</h1>
-        <p style={{ color: "#94a3b8" }}>Upload your stock data and ask questions in plain English</p>
+        <p style={{ color: "#94a3b8" }}>Upload stock data · Ask in plain English · Get instant charts</p>
       </div>
 
-      {/* Upload Section */}
-      <UploadZone onUpload={setUploadData} />
+      {/* BEFORE UPLOAD → show upload zone */}
+      {!uploadData ? (
+        <UploadZone onUpload={setUploadData} />
+      ) : (
+        <div>
 
-      {/* Preview Section — shows after upload */}
-      {uploadData && (
-        <div style={{ marginTop: "40px", background: "#1e293b", borderRadius: "12px", padding: "24px" }}>
-          
-          <h2 style={{ color: "#10b981", marginBottom: "16px" }}>✅ File Loaded Successfully!</h2>
-          
-          <div style={{ display: "flex", gap: "24px", marginBottom: "24px" }}>
-            <div style={{ background: "#0f172a", padding: "16px", borderRadius: "8px", flex: 1 }}>
-              <p style={{ color: "#94a3b8", fontSize: "0.8rem" }}>TOTAL ROWS</p>
-              <p style={{ fontSize: "2rem", fontWeight: "bold", color: "white" }}>{uploadData.total_rows}</p>
-            </div>
-            <div style={{ background: "#0f172a", padding: "16px", borderRadius: "8px", flex: 1 }}>
-              <p style={{ color: "#94a3b8", fontSize: "0.8rem" }}>COLUMNS FOUND</p>
-              <p style={{ fontSize: "2rem", fontWeight: "bold", color: "white" }}>{uploadData.columns.length}</p>
-            </div>
+          {/* Green success bar at top */}
+          <div style={{
+            maxWidth: "800px", margin: "0 auto 32px",
+            background: "#0d2d22", border: "1px solid #10b981",
+            borderRadius: "10px", padding: "12px 20px",
+            display: "flex", justifyContent: "space-between", alignItems: "center"
+          }}>
+            <span style={{ color: "#10b981" }}>
+              ✅ <strong>{uploadData.total_rows} rows</strong> loaded · Columns: {uploadData.columns.join(", ")}
+            </span>
+            <button
+              onClick={() => { setUploadData(null); setResult(null) }}
+              style={{ background: "transparent", color: "#64748b", border: "none", cursor: "pointer" }}
+            >
+              Upload new file
+            </button>
           </div>
 
-          {/* Column Tags */}
-          <p style={{ color: "#94a3b8", marginBottom: "8px" }}>Columns detected:</p>
-          <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginBottom: "24px" }}>
-            {uploadData.columns.map(col => (
-              <span key={col} style={{
-                background: "#10b981", color: "black",
-                padding: "4px 12px", borderRadius: "999px", fontSize: "0.8rem", fontWeight: "bold"
-              }}>
-                {col}
-              </span>
-            ))}
-          </div>
+          {/* AI Chat Input */}
+          <ChatBar
+            columns={uploadData.columns}
+            onResult={setResult}
+            loading={loading}
+            setLoading={setLoading}
+          />
 
-          {/* Data Preview Table */}
-          <p style={{ color: "#94a3b8", marginBottom: "8px" }}>First 5 rows:</p>
-          <div style={{ overflowX: "auto" }}>
-            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.85rem" }}>
-              <thead>
-                <tr>
-                  {uploadData.columns.map(col => (
-                    <th key={col} style={{
-                      padding: "8px 12px", background: "#0f172a",
-                      color: "#10b981", textAlign: "left", border: "1px solid #334155"
-                    }}>
-                      {col}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {uploadData.preview.map((row, i) => (
-                  <tr key={i}>
-                    {uploadData.columns.map(col => (
-                      <td key={col} style={{
-                        padding: "8px 12px", border: "1px solid #334155", color: "#cbd5e1"
-                      }}>
-                        {row[col]}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          {/* Chart Result */}
+          <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+            {loading && (
+              <div style={{ textAlign: "center", padding: "40px", color: "#10b981" }}>
+                <p style={{ fontSize: "2rem" }}>🤖</p>
+                <p>AI is generating your chart...</p>
+              </div>
+            )}
+            {result && !loading && <StockChart result={result} />}
           </div>
 
         </div>
       )}
+
     </div>
   )
 }
