@@ -9,113 +9,66 @@ export default function UploadZone({ onUpload }) {
 
   const handleFile = async (file) => {
     if (!file) return
-    if (!file.name.endsWith(".csv")) {
-      setError("Please upload a .csv file only")
-      return
-    }
-
-    setLoading(true)
-    setError(null)
-
+    if (!file.name.endsWith(".csv")) { setError("Please upload a .csv file only"); return }
+    setLoading(true); setError(null)
     const formData = new FormData()
     formData.append("file", file)
-
     try {
-      const res = await axios.post("http://localhost:8001/upload-csv", formData, {
-        headers: { "Content-Type": "multipart/form-data" }
-      })
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/upload-csv`, formData)
       onUpload(res.data)
-    } catch (err) {
-      console.error(err)
-      setError("Upload failed. Is your backend running on port 8001?")
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  // Drag events
-  const onDragOver = (e) => {
-    e.preventDefault()
-    e.stopPropagation()
-    setIsDragging(true)
-  }
-
-  const onDragLeave = (e) => {
-    e.preventDefault()
-    e.stopPropagation()
-    setIsDragging(false)
-  }
-
-  const onDrop = (e) => {
-    e.preventDefault()
-    e.stopPropagation()
-    setIsDragging(false)
-    const file = e.dataTransfer.files[0]
-    handleFile(file)
-  }
-
-
-  const onInputChange = (e) => {
-    const file = e.target.files[0]
-    handleFile(file)
+    } catch {
+      setError("Upload failed. Is your backend running?")
+    } finally { setLoading(false) }
   }
 
   return (
     <div
-      onDragOver={onDragOver}
-      onDragLeave={onDragLeave}
-      onDrop={onDrop}
-      onClick={() => inputRef.current.click()}
+      onClick={() => !loading && inputRef.current.click()}
+      onDragOver={(e) => { e.preventDefault(); setIsDragging(true) }}
+      onDragLeave={() => setIsDragging(false)}
+      onDrop={(e) => { e.preventDefault(); setIsDragging(false); handleFile(e.dataTransfer.files[0]) }}
       style={{
-        border: `2px dashed ${isDragging ? "#10b981" : "#334155"}`,
-        borderRadius: "16px",
-        padding: "60px 40px",
+        background: isDragging ? "var(--accent-soft)" : "var(--bg-card)",
+        border: `2px dashed ${isDragging ? "var(--accent)" : "var(--border-light)"}`,
+        borderRadius: "var(--radius-xl)",
+        padding: "56px 40px",
         textAlign: "center",
-        background: isDragging ? "#0d2d22" : "#1e293b",
-        transition: "all 0.2s ease",
         cursor: "pointer",
-        maxWidth: "600px",
+        maxWidth: "560px",
         margin: "0 auto",
-        userSelect: "none"
+        transition: "all 0.2s ease"
       }}
     >
-      {/* Hidden real file input */}
-      <input
-        ref={inputRef}
-        type="file"
-        accept=".csv"
-        onChange={onInputChange}
-        style={{ display: "none" }}
-      />
+      <input ref={inputRef} type="file" accept=".csv" onChange={(e) => handleFile(e.target.files[0])} style={{ display: "none" }} />
 
       {loading ? (
-        <div>
-          <p style={{ fontSize: "2rem" }}>⏳</p>
-          <p style={{ color: "#10b981" }}>Uploading & analyzing your data...</p>
-        </div>
+        <>
+          <div style={{ fontSize: "2rem", marginBottom: "12px" }}>⏳</div>
+          <p style={{ fontWeight: "500", color: "var(--text-primary)" }}>Analyzing your data...</p>
+          <p style={{ color: "var(--text-tertiary)", fontSize: "0.85rem", marginTop: "4px" }}>This takes just a second</p>
+        </>
       ) : (
-        <div>
-          <p style={{ fontSize: "3rem", marginBottom: "12px" }}>📂</p>
-          <p style={{ fontSize: "1.2rem", fontWeight: "bold", marginBottom: "8px", color: "white" }}>
-            Drag & drop your stock CSV here
-          </p>
-          <p style={{ color: "#64748b", marginBottom: "20px" }}>
-            or click anywhere here to browse
-          </p>
-          <span style={{
-            background: "#10b981",
-            color: "black",
-            padding: "10px 24px",
-            borderRadius: "8px",
-            fontWeight: "bold",
+        <>
+          <div style={{
+            width: "52px", height: "52px", background: "var(--accent-soft)",
+            borderRadius: "14px", display: "flex", alignItems: "center",
+            justifyContent: "center", margin: "0 auto 16px", fontSize: "1.5rem"
           }}>
-            Browse File
-          </span>
-
+            📂
+          </div>
+          <p style={{ fontSize: "1.05rem", fontWeight: "600", color: "var(--text-primary)", marginBottom: "6px" }}>
+            Drop your stock CSV here
+          </p>
+          <p style={{ color: "var(--text-tertiary)", fontSize: "0.875rem", marginBottom: "20px" }}>
+            NSE · BSE · Yahoo Finance · Any stock CSV
+          </p>
+          <button className="btn-primary" onClick={(e) => { e.stopPropagation(); inputRef.current.click() }}>
+            Choose file
+          </button>
           {error && (
-            <p style={{ color: "#f87171", marginTop: "16px" }}>{error}</p>
+            <p style={{ color: "var(--danger)", marginTop: "16px", fontSize: "0.875rem" }}>{error}</p>
           )}
-        </div>
+        </>
       )}
     </div>
   )
