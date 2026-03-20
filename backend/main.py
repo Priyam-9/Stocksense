@@ -54,7 +54,7 @@ async def upload_csv(file: UploadFile = File(...)):
     }
 
 
-# ✅ New query endpoint
+# New query endpoint 
 class QueryRequest(BaseModel):
     question: str
 
