@@ -54,7 +54,7 @@ export default function UploadZone({ onUpload }) {
             borderRadius: "14px", display: "flex", alignItems: "center",
             justifyContent: "center", margin: "0 auto 16px", fontSize: "1.5rem"
           }}>
-            📂
+            📂Get it done here
           </div>
           <p style={{ fontSize: "1.05rem", fontWeight: "600", color: "var(--text-primary)", marginBottom: "6px" }}>
             Drop your stock CSV here

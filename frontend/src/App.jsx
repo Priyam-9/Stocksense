@@ -14,7 +14,7 @@ export default function App() {
   const pinToDashboard = () => {
     if (!result) return
     setWidgets(prev => [...prev, result])
-    setActiveTab("dashboard")
+    setActiveTab("dashboard") 
   }
 
   return (
@@ -35,7 +35,7 @@ export default function App() {
         zIndex: 100
       }}>
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <span style={{ fontSize: "1.1rem" }}>📈</span>
+          <span style={{ fontSize: "1.1rem" }}>StockSense</span>
           <span style={{ fontWeight: "600", fontSize: "1rem", letterSpacing: "-0.02em", color: "var(--text-primary)" }}>
             StockSense
           </span>

@@ -10,7 +10,7 @@ export default function DashboardGrid({ widgets, onRemove }) {
       borderRadius: "var(--radius-xl)",
       color: "var(--text-tertiary)"
     }}>
-      <p style={{ fontSize: "1.5rem", marginBottom: "8px" }}>📌</p>
+      <p style={{ fontSize: "1.5rem", marginBottom: "8px" }}>PIN</p>
       <p style={{ fontWeight: "500" }}>Your dashboard is empty</p>
       <p style={{ fontSize: "0.85rem", marginTop: "4px" }}>Ask a question and click "Pin to Dashboard"</p>
     </div>
