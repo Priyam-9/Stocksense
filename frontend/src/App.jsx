@@ -205,7 +205,7 @@ export default function App() {
         color: "var(--text-tertiary)", fontSize: "0.8rem",
         borderTop: "1px solid var(--border-light)"
       }}>
-        StockSense AI — Built for students & finance freshers 🎓
+        StockSense AI — Built for students & finance freshers 🎓 Using DuckDB, GroQ.
       </footer>
 
     </div>
