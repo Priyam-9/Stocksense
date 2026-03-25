@@ -1,3 +1,4 @@
+#renderyaml PP
 services:
   - type: web
     name: stocksense-backend
