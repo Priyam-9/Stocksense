@@ -9,12 +9,6 @@ logger = get_logger("validator")
 
 
 class DataValidator:
-    """
-    Validates stock data before loading to MySQL.
-    Interview talking point: "I added a validation layer to ensure
-    data quality before it hits the database — prevents silent corruption"
-    """
-
     def __init__(self):
         self.errors   = []
         self.warnings = []
@@ -22,8 +16,7 @@ class DataValidator:
     def validate(self, df: pd.DataFrame):
         """
         Returns (is_valid, cleaned_df)
-        Staff principle: return both result AND cleaned data
-        so caller doesn't have to re-process
+        
         """
         self.errors   = []
         self.warnings = []
