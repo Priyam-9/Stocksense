@@ -1,5 +1,5 @@
-# scheduler.py — Automated pipeline scheduling
-# Interview talking point: "Production pipelines don't run manually"
+# scheduler.py 
+# 
 
 import schedule
 import time
@@ -58,7 +58,7 @@ def run_scheduler():
     # Run immediately on start
     process_new_files()
 
-    # Then run on schedule
+    #run on schedule
     schedule.every(interval).seconds.do(process_new_files)
 
     while True:

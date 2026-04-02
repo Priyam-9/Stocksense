@@ -1,5 +1,5 @@
-# validate.py — Data validation layer
-# Senior principle: garbage in = garbage out. Validate BEFORE loading
+# validate.py 
+# 
 
 import pandas as pd
 from logger import get_logger

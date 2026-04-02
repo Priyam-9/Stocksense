@@ -1,5 +1,5 @@
-# config.py — All settings in one place
-# Senior principle: never hardcode configs in logic files
+# config.py 
+# 
 
 import os
 from dotenv import load_dotenv

@@ -1,5 +1,5 @@
-# logger.py — Pipeline monitoring and logging
-# Staff principle: you can't fix what you can't observe
+# logger.py 
+# 
 
 import logging
 import os
