@@ -1,18 +1,21 @@
 from dotenv import load_dotenv
 load_dotenv()
+
+import os
+import io
+
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import duckdb
 import pandas as pd
-import io
+
 
 from pipeline import generate_sql_and_chart
 from query_executor import run_query
 
 app = FastAPI()
 
-import os
 
 origins = [
     "http://localhost:5173",
@@ -64,10 +67,10 @@ async def query(request: QueryRequest):
         raise HTTPException(status_code=400, detail="No CSV uploaded yet!")
 
     try:
-        # Step 1: AI generates SQL + chart config
+        
         ai_result = generate_sql_and_chart(request.question, uploaded_columns)
 
-        # Step 2: Run the SQL on DuckDB
+        
         data = run_query(db, ai_result["sql"])
 
         return {
@@ -81,3 +84,14 @@ async def query(request: QueryRequest):
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+from datetime import datetime
+
+@app.get("/health")
+def health_check():
+    return {
+        "status": "healthy",
+        "service": "stocksense-api",
+        "version": "1.0.0",
+        "timestamp": datetime.utcnow().isoformat()
+    }

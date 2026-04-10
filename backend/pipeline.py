@@ -2,7 +2,13 @@ import os
 import json
 from groq import Groq
 
-client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
+def get_groq_client():
+    api_key = os.environ.get("GROQ_API_KEY")
+    if not api_key:
+        raise ValueError(
+            "GROQ_API_KEY not set. "
+        )
+    return Groq(api_key=api_key)
 
 def generate_sql_and_chart(user_question: str, columns: list) -> dict:
     prompt = f"""
@@ -28,7 +34,7 @@ Rules:
 - For price/volume columns use them as y_axis
 - Return ONLY the JSON, no explanation, no markdown
 """
-    response = client.chat.completions.create(
+    response = get_groq_client().chat.completions.create(
         model="llama-3.3-70b-versatile",
         messages=[{"role": "user", "content": prompt}],
         temperature=0.1
@@ -64,7 +70,7 @@ Rules:
 - Sound like a helpful professor, not a robot
 """
 
-    response = client.chat.completions.create(
+    response = get_groq_client().chat.completions.create(
         model="llama-3.3-70b-versatile",
         messages=[{"role": "user", "content": prompt}],
         temperature=0.7,
