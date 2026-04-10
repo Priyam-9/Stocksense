@@ -129,7 +129,7 @@ scheduler.py   — Folder watcher: auto-processes new CSVs
 
 ```
 stocksense/
-├── ai-service/          # FastAPI backend (deployed on Render)
+├── backend/          # FastAPI backend (deployed on Render)
 │   ├── main.py          # App entry, routes, CORS
 │   ├── pipeline.py      # Groq AI + SQL generation
 │   ├── query_executor.py # DuckDB query runner
