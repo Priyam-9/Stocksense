@@ -188,15 +188,7 @@ npm run dev
 
 ---
 
-## What's Next (Roadmap)
 
-- [ ] **JWT Authentication** — user accounts, protected routes (python-jose + passlib)
-- [ ] **PostgreSQL + SQLAlchemy** — replace MySQL, add ORM models + migrations
-- [ ] **RAG Pipeline** — PDF upload → chunk → embed → ChromaDB → LLM Q&A
-- [ ] **Async Background Tasks** — ETL pipeline runs non-blocking via FastAPI BackgroundTasks
-- [ ] **Rate limiting** — per-IP throttling with slowapi
-
----
 
 ## Author
 
