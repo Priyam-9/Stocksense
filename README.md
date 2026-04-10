@@ -30,7 +30,6 @@ and ask *"Show closing price over time"*
 
 ## Architecture
 
-[PASTE THE ARCHITECTURE DIAGRAM IMAGE HERE — export the SVG or take a screenshot]
 
 ### Request flow
 
