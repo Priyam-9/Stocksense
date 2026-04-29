@@ -192,5 +192,5 @@ npm run dev
 ## Author
 
 **Priyam Patel** — Final year B.Tech CSE, Gautam Buddha University (CGPA 8.8)  
-Targeting: Python AI Backend Engineer roles  
+Targeting: Python AI Backend Engineer roles and Data Engineering and Analyst 
 [GitHub](https://github.com/Priyam-9) · [LinkedIn](YOUR_LINKEDIN_URL)
