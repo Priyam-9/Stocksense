@@ -15,6 +15,12 @@
 
 ---
 
+> ⚠️ **Project Status: Active Development**
+>
+> StockSense AI is currently a work in progress. While the core database querying and basic ETL workflows are operational, this project is still in its early stages. Many features, robust error handling, and performance optimizations have not yet been fully developed or integrated. You may encounter bugs or incomplete UI states as development continues.
+
+---
+
 ## Live Demo
 
 | Service | URL |
@@ -192,5 +198,6 @@ npm run dev
 ## Author
 
 **Priyam Patel** — Final year B.Tech CSE, Gautam Buddha University (CGPA 8.8)  
-Targeting: Python AI Backend Engineer roles and Data Engineering and Analyst 
+
+Targeting: Data Engineering and Analyst Roles.
 [GitHub](https://github.com/Priyam-9) · [LinkedIn](YOUR_LINKEDIN_URL)
